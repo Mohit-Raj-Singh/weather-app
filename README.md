@@ -6,7 +6,6 @@ A simple weather application built with React.js, Tailwind, Node.js, Express.js,
 
 <a href="https://weather-app.sabtech.cloud/" target="_blank">Weather App</a>
 
-
 ## Demo
 
 ![Demo Image 1](https://res.cloudinary.com/dhwvpqguu/image/upload/v1714491128/weather-app/1_eng0up.png)
