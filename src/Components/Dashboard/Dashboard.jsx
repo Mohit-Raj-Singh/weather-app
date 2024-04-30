@@ -12,21 +12,21 @@ import {
   fetchWeatherWithLocation,
 } from "../../lib/fetchApi";
 import Loader from "../Loader/Loader";
-// import {
-//   clearDay,
-//   clearDaySvg,
-//   clearNight,
-//   clearNightSvg,
-//   cloudyDay,
-//   cloudyDaySvg,
-//   cloudyNight,
-//   cloudyNightSvg,
-//   rainyDay,
-//   rainyNight,
-//   rainySvg,
-//   snowSvg,
-//   thunderstromSvg,
-// } from "../../lib/data";
+import {
+  clearDay,
+  clearDaySvg,
+  clearNight,
+  clearNightSvg,
+  cloudyDay,
+  cloudyDaySvg,
+  cloudyNight,
+  cloudyNightSvg,
+  rainyDay,
+  rainyNight,
+  rainySvg,
+  snowSvg,
+  thunderstromSvg,
+} from "../../lib/data";
 
 const Dashboard = () => {
   const { locationData } = useLocationData();
@@ -40,30 +40,7 @@ const Dashboard = () => {
   const [cityName, setCityName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const clearDay =
-    "https://res.cloudinary.com/dhwvpqguu/image/upload/v1714134045/weather-app/sunny_sfiuog.jpg";
-
-  const clearNight =
-    "https://res.cloudinary.com/dhwvpqguu/image/upload/v1714212829/weather-app/night-clearr_siwpv7.png";
-
-  const rainyDay =
-    "https://res.cloudinary.com/dhwvpqguu/image/upload/v1714134074/weather-app/rainy_pa6xy8.jpg";
-  const rainyNight =
-    "https://res.cloudinary.com/dhwvpqguu/image/upload/v1714134161/weather-app/night-rainy_trky4c.jpg";
-
-  const cloudyDay =
-    "https://res.cloudinary.com/dhwvpqguu/image/upload/v1714283041/weather-app/cloud-day_y8w2io.jpg";
-  const cloudyNight =
-    "https://res.cloudinary.com/dhwvpqguu/image/upload/v1714283055/weather-app/cloud-night_oeobmx.jpg";
-
-  const clearDaySvg = "./assets/icons/day.svg";
-  const clearNightSvg = "./assets/icons/night.svg";
-  const rainySvg = "./assets/icons/rainy-7.svg";
-  const cloudyNightSvg = "./assets/icons/partiallt-cloudy-night.svg";
-  const cloudyDaySvg = "./assets/icons/partiallt-cloudy-day.svg";
-  const thunderstromSvg = "./assets/icons/thunder.svg";
-  const snowSvg = "./assets/icons/snow.svg";
-
+  //setting day or night
   useEffect(() => {
     const checkTime = () => {
       const now = new Date();
@@ -82,32 +59,7 @@ const Dashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // useEffect(() => {
-  //   if (weatherData) {
-  //     const weatherCondition = weatherData?.weather[0]?.description;
-  //     console.log(weatherCondition);
-  //     if (weatherCondition == "clear sky" || "Haze") {
-  //       setIsClear(true);
-  //     } else if (
-  //       weatherCondition == "smoke" ||
-  //       "few clouds" ||
-  //       "scattered clouds" ||
-  //       "broken clouds"
-  //     ) {
-  //       console.log("object");
-  //       setIsCloud(true);
-  //     } else if (weatherCondition == "shower rain" || "shower rain") {
-  //       setIsRainy(true);
-  //     } else if (weatherCondition == "thunderstorm") {
-  //       setIsThunder(true);
-  //     } else if (weatherCondition == "snow") {
-  //       setIsSnow(true);
-  //     } else {
-  //       setIsClear(true);
-  //     }
-  //   }
-  // }, [weatherData]);
-
+// fetch weather to current location
   const handleFetchLocationWeather = async (data) => {
     try {
       setIsLoading(true);
@@ -120,6 +72,7 @@ const Dashboard = () => {
     }
   };
 
+  //fetch current location
   useEffect(() => {
     if (!locationData?.latitude && !locationData?.longitude) {
       const payload = {
@@ -136,6 +89,7 @@ const Dashboard = () => {
     }
   }, [locationData]);
 
+  //fetch weather with city
   const handleFetchWeather = async (city_name) => {
     try {
       setIsLoading(true);
@@ -155,24 +109,7 @@ const Dashboard = () => {
   }, [cityName]);
 
   useEffect(() => {
-    // setIsLoading(true);
-
-    // const handleFetchWeather = async (city_name) => {
-    //   try {
-    //     setIsLoading(true);
-    //     const weatherResponse = await fetchWeatherDetails(city_name);
-    //     // return weatherResponse;
-    //     setWeatherData(weatherResponse);
-    //     setIsLoading(false);
-    //   } catch (err) {
-    //     setIsLoading(false);
-    //     console.log(err);
-    //   }
-    // };
-
-    // if (cityName) {
-    //   handleFetchWeather(cityName);
-    // }
+    setIsLoading(true);
 
     if (weatherData) {
       const weatherCondition = weatherData?.weather[0]?.description;
@@ -180,29 +117,43 @@ const Dashboard = () => {
       const cloudyWeather = weatherData?.weather[0]?.main;
       console.log(checkForCloud(cloudyWeather));
       if (weatherCondition === "clear sky" || weatherCondition === "haze") {
-        console.log("iiiiiobject");
         setIsClear(true);
+        setIsCloud(false)
+        setIsRainy(false)
+        setIsThunder(false)
+        setIsSnow(false)
       } else if (checkForCloud(cloudyWeather)) {
-        console.log("object");
         setIsClear(false);
         setIsCloud(true);
+        setIsRainy(false)
+        setIsThunder(false)
+        setIsSnow(false)
       } else if (
         weatherCondition === "shower rain" ||
         weatherCondition === "rain"
       ) {
         setIsRainy(true);
+        setIsClear(false);
+        setIsCloud(false)
+        setIsThunder(false)
+        setIsSnow(false)
       } else if (weatherCondition === "thunderstorm") {
         setIsThunder(true);
+        setIsClear(false);
+        setIsCloud(false)
+        setIsRainy(false)
+        setIsSnow(false)
       } else if (weatherCondition === "snow") {
         setIsSnow(true);
-      } else {
+        setIsThunder(false);
         setIsClear(false);
+        setIsCloud(false)
+        setIsRainy(false)
       }
-      // setIsLoading(false);
+      setIsLoading(false);
     }
-  }, [weatherData, ]);
+  }, [weatherData, isLoading]);
 
-  console.log(isClear, "isCLear");
 
   return (
     <>
@@ -214,21 +165,20 @@ const Dashboard = () => {
             <>
               <div
                 style={{
-                  backgroundImage: `url(${
-                    isDay && isClear
-                      ? clearDay
-                      : isDay && (isRainy || isSnow)
+                  backgroundImage: `url(${isDay && isClear
+                    ? clearDay
+                    : isDay && (isRainy || isSnow)
                       ? rainyDay
                       : !isDay && isClear
-                      ? clearNight
-                      : !isDay && (isRainy || isSnow)
-                      ? rainyNight
-                      : isDay && (isCloud || isThunder)
-                      ? cloudyDay
-                      : !isDay && (isCloud || isThunder)
-                      ? cloudyNight
-                      : ""
-                  }
+                        ? clearNight
+                        : !isDay && (isRainy || isSnow)
+                          ? rainyNight
+                          : isDay && (isCloud || isThunder)
+                            ? cloudyDay
+                            : !isDay && (isCloud || isThunder)
+                              ? cloudyNight
+                              : isClear
+                    }
 )`,
                   backgroundSize: "cover",
                   backgroundPosition: "center",
@@ -241,9 +191,7 @@ const Dashboard = () => {
                   <div className="flex justify-between">
                     <div className="px-2 lg:px-10">
                       <h2
-                        className={`text-md lg:text-3xl flex gap-4 ${
-                          isDay ? "text-black" : "text-white"
-                        }`}
+                        className={`text-md lg:text-3xl flex gap-4 ${isDay ? "text-black" : "text-white"}`}
                       >
                         {weatherData?.name}
                       </h2>
@@ -260,18 +208,18 @@ const Dashboard = () => {
                               isDay && isClear
                                 ? clearDaySvg
                                 : !isDay && isClear
-                                ? clearNightSvg
-                                : isRainy
-                                ? rainySvg
-                                : isDay && isCloud
-                                ? cloudyDaySvg
-                                : !isDay && isCloud
-                                ? cloudyNightSvg
-                                : isThunder
-                                ? thunderstromSvg
-                                : isSnow
-                                ? snowSvg
-                                : clearDaySvg
+                                  ? clearNightSvg
+                                  : isRainy
+                                    ? rainySvg
+                                    : isDay && isCloud
+                                      ? cloudyDaySvg
+                                      : !isDay && isCloud
+                                        ? cloudyNightSvg
+                                        : isThunder
+                                          ? thunderstromSvg
+                                          : isSnow
+                                            ? snowSvg
+                                            : clearDaySvg
                             }
                             alt=""
                             className="w-20 lg:w-40"
@@ -279,22 +227,20 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <div
-                        className={`flex gap-4 lg:gap-0 justify-between text-md lg:text-2xl ${
-                          isDay ? "text-black" : "text-white"
-                        }`}
+                        className={`flex gap-4 lg:gap-0 justify-between text-md lg:text-2xl ${isDay ? "text-black" : "text-white"}`}
                       >
                         {weatherData?.main?.temp_max ==
-                        weatherData?.main?.temp_min ? (
+                          weatherData?.main?.temp_min ? (
                           <>
                             <h5>
-                              High:
+                              High:{' '}
                               {customRound(
                                 kelvinToCelsius(weatherData?.main?.temp_max)
                               )}
                               °C
                             </h5>
                             <h5>
-                              Low:
+                              Low:{' '}
                               {customRound(
                                 kelvinToCelsius(weatherData?.main?.temp_min)
                               ) - 14}
@@ -304,14 +250,14 @@ const Dashboard = () => {
                         ) : (
                           <>
                             <h5>
-                              High:
+                              High:{' '}
                               {customRound(
                                 kelvinToCelsius(weatherData?.main?.temp_max)
                               )}
                               °C
                             </h5>
                             <h5>
-                              Low:
+                              Low:{' '}
                               {customRound(
                                 kelvinToCelsius(weatherData?.main?.temp_min)
                               )}
@@ -323,17 +269,13 @@ const Dashboard = () => {
                     </div>
                     <div className="px-2 lg:px-10 flex lg:block items-end">
                       <h2
-                        className={`text-md lg:text-3xl mt-0 lg:mt-16 ${
-                          isDay ? "text-black" : "text-white"
-                        }`}
+                        className={`text-md lg:text-3xl mt-0 lg:mt-16 ${isDay ? "text-black" : "text-white"}`}
                       >
                         {capitalizeWords(weatherData?.weather[0]?.description)}
                         <h5
-                          className={`text-md lg:text-2xl mt-1 lg:mt-8 ${
-                            isDay ? "text-black" : "text-white"
-                          }`}
+                          className={`text-md lg:text-2xl mt-1 lg:mt-8 ${isDay ? "text-black" : "text-white"}`}
                         >
-                          Feels like
+                          Feels like{' '}
                           {customRound(
                             kelvinToCelsius(weatherData?.main?.feels_like)
                           )}

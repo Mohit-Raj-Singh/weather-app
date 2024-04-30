@@ -1,3 +1,5 @@
+const BASE_PATH='http://localhost:4500'
+
 export default async function sendRequest(path, opts = {}) {
   const headers = Object.assign({}, opts.headers || {}, {
     "Content-type": "application/json; charset=UTF-8",
@@ -24,7 +26,7 @@ export async function sendPublicRequest(path, opts = {}) {
   });
 
   const response = await fetch(
-    `${"http://localhost:4500"}${path}`,
+    `${BASE_PATH}${path}`,
     Object.assign({ method: "POST", credentials: "same-origin" }, opts, {
       headers,
     })

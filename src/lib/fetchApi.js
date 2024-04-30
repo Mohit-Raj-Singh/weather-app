@@ -1,6 +1,6 @@
 import sendRequest, { sendPublicRequest } from './sendRequest'
 
-//Get details from verifier table
+//Get all indian cities
 export const fetchCitiesData = async (data) => {
     try {
         const response = await sendRequest(`/countries/cities`, {
@@ -13,6 +13,7 @@ export const fetchCitiesData = async (data) => {
     }
 }
 
+//fetch weather with city name
 export const fetchWeatherDetails = async (city) => {
     try {
         const response = await sendPublicRequest(`/weather/${city}`, {
@@ -24,6 +25,7 @@ export const fetchWeatherDetails = async (city) => {
     }
 }
 
+//fetch weather with location(lattitude and longitude)
 export const fetchWeatherWithLocation = async (data) => {
     try {
         const response = await sendPublicRequest(`/current-weather`, {

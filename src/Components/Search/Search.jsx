@@ -74,8 +74,8 @@ const Search = ({ setCityName }) => {
     // Custom theme object for Autosuggest component
     const customTheme = {
         container: 'relative mt-10',
-        input: 'w-full px-4 py-2 rounded-md border focus:outline-none focus:border-blue-500',
-        suggestionsContainer: 'absolute z-50 mt-2 w-full bg-white border rounded-md shadow-lg',
+        input: 'w-full px-4 py-2 rounded-md border border-blue-300 focus:outline-none focus:border-blue-500',
+        suggestionsContainer: 'absolute z-50 mt-2 w-full bg-white rounded-md shadow-lg',
         suggestion: 'px-4 py-2 cursor-pointer hover:bg-gray-100',
     }
 
