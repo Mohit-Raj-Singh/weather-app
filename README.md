@@ -26,7 +26,7 @@ A simple weather application built with React.js, Tailwind, Node.js, Express.js,
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/weather-app.git`
+1. Clone the repository: `git clone https://github.com/Mohit-Raj-Singh/weather-app`
 2. Install dependencies: `npm install`
 3. Start the backend server: `npm start`
 4. Start the frontend development server: `npm start` in the `client` directory
