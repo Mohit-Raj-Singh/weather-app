@@ -1,5 +1,5 @@
 // const BASE_PATH='http://localhost:4500'
-const BASE_PATH='http://15.207.248.109:4500'
+const BASE_PATH = 'https://backend.sabtech.cloud'
 
 export default async function sendRequest(path, opts = {}) {
   const headers = Object.assign({}, opts.headers || {}, {
